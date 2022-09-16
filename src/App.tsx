@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useTransform } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { render } from "react-dom";
 
@@ -48,7 +48,7 @@ const DragBox = styled(Box)`
     width: 50px;
     height: 50px;
     place-self: center;
-    background-color: #00b894;
+    background-color: rgb(255, 118, 117);
 `;
 const Circle = styled(motion.div)`
     z-index: 1000;
@@ -97,6 +97,11 @@ const circleVariants = {
 
 function App() {
     const constranisRef = useRef(null);
+    const x = useMotionValue(0);
+    const boxScale = useTransform(x, [-100, 0, 100], [2, 1, 0.5]);
+    useEffect(() => {
+        boxScale.onChange(() => console.log(boxScale.get()));
+    }, [x]);
     return (
         <Wrapper>
             <button style={{ position: "absolute" }} onClick={() => window.location.reload()}>
@@ -119,16 +124,29 @@ function App() {
                 <Title>Gestures</Title>
                 <Box variants={myVars1} whileHover="hover" whileTap="tap" />
             </Container>
-            <Container bgColor="#00b894">
+            <Container bgColor="rgb(255, 118, 117)">
                 <Title>Drag</Title>
                 <Box variants={myVars1} isDrag={true} ref={constranisRef}>
                     {/* transition을 주려면 rgb(숫자)값으로 줘야함 */}
                     <DragBox
                         drag
+                        dragElastic={0.1}
                         dragConstraints={constranisRef}
-                        whileDrag={{ backgroundColor: "rgb(85, 239, 196)" }}
+                        whileDrag={{ backgroundColor: "rgb(250, 177, 160)" }}
                     />
                 </Box>
+            </Container>
+            <Container bgColor="rgb(255, 118, 117)" ref={constranisRef}>
+                <Title>Drag</Title>
+
+                <DragBox
+                    style={{ x, scale: boxScale }}
+                    drag
+                    dragElastic={0.1}
+                    dragSnapToOrigin
+                    dragConstraints={constranisRef}
+                    whileDrag={{ backgroundColor: "rgb(250, 177, 160)" }}
+                />
             </Container>
         </Wrapper>
     );

@@ -10,7 +10,7 @@ const Globalstyle = createGlobalStyle`
   font-family: 'Source Sans Pro', sans-serif;
   color:black;
   line-height: 1.2;
-  background:linear-gradient(135deg,#ffffff,#b9b9b9);
+  background:linear-gradient(135deg,rgb(255, 255, 255),rgb(185, 185, 185));
 }
 `;
 

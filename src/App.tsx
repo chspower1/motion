@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { motion, useMotionValue, useTransform } from "framer-motion";
+import { motion, useMotionValue, useTransform, useScroll } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { render } from "react-dom";
 
@@ -12,9 +12,9 @@ const Wrapper = styled.div`
     justify-content: center;
     align-items: center;
 `;
-const Container = styled.div<{ bgColor?: string }>`
+const Container = styled(motion.div)<{ bgColor?: string }>`
     position: relative;
-    background: linear-gradient(140deg, #fcfcfc, ${(props) => props.bgColor});
+    background: linear-gradient(140deg, rgb(252, 252, 252), ${(props) => props.bgColor});
     width: 250px;
     height: 250px;
     display: flex;
@@ -26,7 +26,7 @@ const Container = styled.div<{ bgColor?: string }>`
     }
 `;
 const Title = styled.h1`
-    color: white;
+    color: rgb(255, 255, 255);
     z-index: 1000;
     position: absolute;
     bottom: 10px;
@@ -38,7 +38,7 @@ const Box = styled(motion.div)<{ isDrag?: boolean }>`
     height: 100px;
     border-radius: 20px;
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     overflow: hidden;
     display: ${(props) => (props.isDrag ? "flex" : "grid")};
     justify-content: center;
@@ -58,6 +58,10 @@ const Circle = styled(motion.div)`
     place-self: center;
 `;
 
+const Svg = styled.svg`
+    width: 100px;
+    height: 100px;
+`;
 // Variants
 const myVars1 = {
     start: { scale: 0 },
@@ -97,21 +101,29 @@ const circleVariants = {
 
 function App() {
     const constranisRef = useRef(null);
+    const scrollRef = useRef(null);
     const x = useMotionValue(0);
-    const boxScale = useTransform(x, [-100, 0, 100], [2, 1, 0.5]);
+    const boxRotate = useTransform(x, [-100, 100], [-360, 360]);
+    const boxBgColor = useTransform(
+        x,
+        [-100, 0, 100],
+        ["rgb(47, 73, 185)", "rgb(255, 118, 117)", "rgb(23, 151, 123)"]
+    );
+    const { scrollYProgress } = useScroll();
+    const ScrollScale = useTransform(scrollYProgress, [0, 1], [0.1, 2]);
     useEffect(() => {
-        boxScale.onChange(() => console.log(boxScale.get()));
-    }, [x]);
+        scrollYProgress.onChange(() => console.log(scrollYProgress.get()));
+    }, []);
     return (
         <Wrapper>
             <button style={{ position: "absolute" }} onClick={() => window.location.reload()}>
                 새로고침
             </button>
-            <Container bgColor="#74b9ff">
+            <Container bgColor="rgb(116, 185, 255)">
                 <Title>Animation</Title>
                 <Box variants={myVars1} initial="start" animate="end" />
             </Container>
-            <Container bgColor="#fd79a8">
+            <Container bgColor="rgb(253, 121, 168)">
                 <Title>Variants</Title>
                 <Box variants={myVars2} initial="start" animate="end">
                     <Circle className="circle" variants={circleVariants} />
@@ -120,7 +132,7 @@ function App() {
                     <Circle className="circle" variants={circleVariants} />
                 </Box>
             </Container>
-            <Container bgColor="#00b894">
+            <Container bgColor="rgb(0, 184, 148)">
                 <Title>Gestures</Title>
                 <Box variants={myVars1} whileHover="hover" whileTap="tap" />
             </Container>
@@ -136,17 +148,31 @@ function App() {
                     />
                 </Box>
             </Container>
-            <Container bgColor="rgb(255, 118, 117)" ref={constranisRef}>
-                <Title>Drag</Title>
+            <Container bgColor="rgb(255, 118, 117)" ref={scrollRef}>
+                <Title>Drag2</Title>
 
                 <DragBox
-                    style={{ x, scale: boxScale }}
+                    style={{ x, rotateZ: boxRotate, backgroundColor: boxBgColor }}
                     drag
                     dragElastic={0.1}
                     dragSnapToOrigin
-                    dragConstraints={constranisRef}
-                    whileDrag={{ backgroundColor: "rgb(250, 177, 160)" }}
+                    dragConstraints={scrollRef}
                 />
+            </Container>
+            <Container bgColor="rgb(116, 185, 255)">
+                <Title>Scroll</Title>
+                <Box style={{ scale: ScrollScale }} />
+            </Container>
+            <Container bgColor="rgb(116, 185, 255)">
+                <Title>Scroll</Title>
+                <Svg viewBox="0 0 576 512">
+                    <motion.path
+                        fill="transparent"
+                        stroke="white"
+                        strokeWidth="10"
+                        d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"
+                    />
+                </Svg>
             </Container>
         </Wrapper>
     );

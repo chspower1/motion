@@ -1,5 +1,12 @@
 import styled from "styled-components";
-import { motion, useMotionValue, useTransform, useScroll, ResolvedValues } from "framer-motion";
+import {
+    motion,
+    useMotionValue,
+    useTransform,
+    useScroll,
+    ResolvedValues,
+    AnimatePresence,
+} from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { render } from "react-dom";
 
@@ -11,13 +18,14 @@ const Wrapper = styled.div`
     height: auto;
     width: 100vw;
 `;
-const Container = styled.div`
+const SampleContainer = styled.div`
     display: flex;
     position: relative;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
 `;
+const ModalContainer = styled(SampleContainer)``;
 const Title = styled.h1`
     position: relative;
     font-size: 60px;
@@ -131,8 +139,30 @@ const pathVar = {
     },
 };
 
+const slideVar = {
+    invisible: {
+        scale: 0,
+        x: 100,
+    },
+    visible: {
+        scale: 1,
+        x: 0,
+        transition: {
+            duration: 1,
+        },
+    },
+    leaving: {
+        scale: 0,
+        x: -100,
+        transition: {
+            duration: 1,
+        },
+    },
+};
+
 function App() {
     const [refresh, setRefresh] = useState([0, 0, 0]);
+    const [showing, setShowing] = useState(0);
     const constranisRef = useRef(null);
     const scrollRef = useRef(null);
     const x = useMotionValue(0);
@@ -142,7 +172,7 @@ function App() {
     const boxBgColor = useTransform(
         x,
         [-100, 0, 100],
-        ["rgb(116, 185, 255)", "rgb(255, 118, 117)", "rgb(162, 155, 254)"]
+        ["rgb(255, 231, 231)", "rgb(255, 118, 117)", "rgb(235, 75, 75)"]
     );
     const { scrollYProgress } = useScroll();
     const ScrollScale = useTransform(scrollYProgress, [0, 1], [0.8, 1]);
@@ -159,8 +189,7 @@ function App() {
     return (
         <Wrapper>
             <Title>Motion Sample</Title>
-
-            <Container>
+            <SampleContainer>
                 {/* Animation */}
                 <ContentContainer bgColor="rgb(116, 185, 255)">
                     <ContentTitle>Animation</ContentTitle>
@@ -240,7 +269,7 @@ function App() {
                     <Box style={{ scale: ScrollScale }} />
                 </ContentContainer>
                 {/* Path */}
-                <ContentContainer bgColor="rgb(116, 185, 255)" key={refresh[2]}>
+                <ContentContainer bgColor="rgb(116, 185, 255)">
                     <RedirectBtn onClick={() => onClickRefresh(2)}>
                         <svg
                             width={"100%"}
@@ -253,14 +282,14 @@ function App() {
                         </svg>
                     </RedirectBtn>
                     <ContentTitle>Path</ContentTitle>
-                    <Svg viewBox="0 0 576 512">
+                    <Svg viewBox="0 0 576 512" key={refresh[2]}>
                         <motion.path
                             variants={pathVar}
                             initial={"start"}
                             animate={"end"}
                             transition={{
                                 default: { duration: 2 },
-                                fill: { duration: 1.5, delay: 0.5 },
+                                fill: { duration: 2, delay: 0.5 },
                             }}
                             stroke="white"
                             strokeWidth="10"
@@ -268,7 +297,40 @@ function App() {
                         />
                     </Svg>
                 </ContentContainer>
-            </Container>
+                {/* Slide */}
+                <ContentContainer bgColor="rgb(116, 185, 255)">
+                    <ContentTitle>Slide</ContentTitle>
+                    <AnimatePresence>
+                        {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) =>
+                            showing === item ? (
+                                <Box
+                                    style={{ position: "absolute" }}
+                                    key={item}
+                                    variants={slideVar}
+                                    initial="invisible"
+                                    animate="visible"
+                                    exit="leaving"
+                                >
+                                    <div style={{ placeSelf: "center", width: "100%" }}>{item}</div>
+                                </Box>
+                            ) : null
+                        )}
+                    </AnimatePresence>
+                    <RedirectBtn
+                        onClick={() => (showing === 10 ? null : setShowing((cur) => cur + 1))}
+                    >
+                        <svg
+                            width={"100%"}
+                            height={"100%"}
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512"
+                            fill={"white"}
+                        >
+                            <path d="M48.5 224H40c-13.3 0-24-10.7-24-24V72c0-9.7 5.8-18.5 14.8-22.2s19.3-1.7 26.2 5.2L98.6 96.6c87.6-86.5 228.7-86.2 315.8 1c87.5 87.5 87.5 229.3 0 316.8s-229.3 87.5-316.8 0c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0c62.5 62.5 163.8 62.5 226.3 0s62.5-163.8 0-226.3c-62.2-62.2-162.7-62.5-225.3-1L185 183c6.9 6.9 8.9 17.2 5.2 26.2s-12.5 14.8-22.2 14.8H48.5z" />
+                        </svg>
+                    </RedirectBtn>
+                </ContentContainer>
+            </SampleContainer>
         </Wrapper>
     );
 }

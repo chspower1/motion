@@ -52,7 +52,7 @@ export const ContentContainer = styled(motion.div)<{ bgColor?: string }>`
     align-items: center;
     margin: 70px;
     border-radius: 20px;
-    .circle {
+    .sameBg {
         background-color: ${(props) => props.bgColor};
     }
 `;
@@ -92,10 +92,10 @@ export const SlideNumber = styled.div`
     transform: translate(-50%, -50%);
 `;
 export const Circle = styled(motion.div)`
-    z-index: 1000;
     width: 35px;
     height: 35px;
     border-radius: 18px;
+    background-color: white;
     place-self: center;
 `;
 

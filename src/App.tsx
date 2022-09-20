@@ -1,14 +1,15 @@
 import { useTransform, useScroll } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
-import AnimationBox from "./components/sample/AnimationBox";
-import VariantBox from "./components/sample/VariantBox";
-import GestureBox from "./components/sample/GestureBox";
+import AnimationBox from "./components/motionBox/AnimationBox";
+import VariantBox from "./components/motionBox/VariantBox";
+import GestureBox from "./components/motionBox/GestureBox";
 import { Title, Wrapper, SampleContainer } from "./components/styled/SampleStyled";
-import DragBox from "./components/sample/DragBox";
-import DragBox2 from "./components/sample/DragBox2";
-import ScrollBox from "./components/sample/ScrollBox";
-import PathBox from "./components/sample/PathBox";
-import SlideBox from "./components/sample/SlideBox";
+import DragBox from "./components/motionBox/DragBox";
+import DragBox2 from "./components/motionBox/DragBox2";
+import ScrollBox from "./components/motionBox/ScrollBox";
+import PathBox from "./components/motionBox/PathBox";
+import SlideBox from "./components/motionBox/SlideBox";
+import CurrentBox from "./components/motionBox/CurrentBox";
 
 function App() {
     const [refresh, setRefresh] = useState([0, 0, 0]);
@@ -45,6 +46,7 @@ function App() {
                 <PathBox onClickRefresh={onClickRefresh} refresh={refresh} />
                 {/* Slide next버튼 클릭 후 prev버튼 누르면 exit가 정상적으로 작동하지 않음(수정요망)*/}
                 <SlideBox />
+                <CurrentBox />
             </SampleContainer>
         </Wrapper>
     );

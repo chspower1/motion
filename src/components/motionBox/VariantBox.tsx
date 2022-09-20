@@ -37,10 +37,10 @@ export default function VariantBox({ onClickRefresh, refresh }: VariantBoxProps)
                 </svg>
             </RedirectBtn>
             <Box variants={myVars2} initial="start" animate="end" key={refresh[1]}>
-                <Circle className="circle" variants={circleVariants} />
-                <Circle className="circle" variants={circleVariants} />
-                <Circle className="circle" variants={circleVariants} />
-                <Circle className="circle" variants={circleVariants} />
+                <Circle className="sameBg" variants={circleVariants} />
+                <Circle className="sameBg" variants={circleVariants} />
+                <Circle className="sameBg" variants={circleVariants} />
+                <Circle className="sameBg" variants={circleVariants} />
             </Box>
         </ContentContainer>
     );

@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/motion/static/js/main.e4c7e9d4.js",
+    "index.html": "/motion/index.html",
+    "main.e4c7e9d4.js.map": "/motion/static/js/main.e4c7e9d4.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.e4c7e9d4.js"
+  ]
+}

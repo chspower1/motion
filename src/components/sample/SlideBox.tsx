@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ContentContainer, ContentTitle, Box, NextBtn } from "../styled/SampleStyled";
 import { AnimatePresence } from "framer-motion";
-import { SlideNumber, PrevBtn } from "./../styled/SampleStyled";
+import { SlideNumber, PrevBtn } from "../styled/SampleStyled";
 const slideVar = {
     exit: (next: boolean) => {
         console.log("exit", next);

@@ -9,15 +9,15 @@ import {
 } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { render } from "react-dom";
-import AnimationBox from "./../components/sample/AnimationBox";
-import VariantBox from "./../components/sample/VariantBox";
-import GestureBox from "./../components/sample/GestureBox";
-import { Title, Wrapper, SampleContainer } from "./../components/styled/SampleStyled";
-import DragBox from "./../components/sample/DragBox";
-import DragBox2 from "./../components/sample/DragBox2";
-import ScrollBox from "./../components/sample/ScrollBox";
-import PathBox from "./../components/sample/PathBox";
-import SlideBox from "./../components/sample/SlideBox";
+import AnimationBox from "./components/sample/AnimationBox";
+import VariantBox from "./components/sample/VariantBox";
+import GestureBox from "./components/sample/GestureBox";
+import { Title, Wrapper, SampleContainer } from "./components/styled/SampleStyled";
+import DragBox from "./components/sample/DragBox";
+import DragBox2 from "./components/sample/DragBox2";
+import ScrollBox from "./components/sample/ScrollBox";
+import PathBox from "./components/sample/PathBox";
+import SlideBox from "./components/sample/SlideBox";
 
 function App() {
     const [refresh, setRefresh] = useState([0, 0, 0]);

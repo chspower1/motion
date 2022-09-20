@@ -52,6 +52,7 @@ export const ContentContainer = styled(motion.div)<{ bgColor?: string }>`
     align-items: center;
     margin: 70px;
     border-radius: 20px;
+
     .sameBg {
         background-color: ${(props) => props.bgColor};
     }

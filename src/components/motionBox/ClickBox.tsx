@@ -12,14 +12,18 @@ const Circle = styled(StyledCircle)`
     position: absolute;
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
 `;
-export default function CurrentBox() {
+export default function ClickBox() {
     const [isClick, setIsClick] = useState(false);
     const onClick = () => {
         setIsClick((cur) => !cur);
     };
 
     return (
-        <ContentContainer bgColor="rgb(116, 185, 255)" onClick={onClick}>
+        <ContentContainer
+            bgColor="rgb(116, 185, 255)"
+            onClick={onClick}
+            style={{ cursor: "pointer" }}
+        >
             <ContentTitle>Click Box!</ContentTitle>
 
             {isClick ? (

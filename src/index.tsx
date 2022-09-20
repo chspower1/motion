@@ -11,6 +11,7 @@ const Globalstyle = createGlobalStyle`
   color:black;
   line-height: 1.2;
   background:linear-gradient(135deg,rgb(255, 255, 255),rgb(185, 185, 185));
+  box-sizing: border-box;
 }
 `;
 

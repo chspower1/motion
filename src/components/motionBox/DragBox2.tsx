@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ContentContainer, ContentTitle, DragTarget } from "../styled/SampleStyled";
 import { useTransform, useMotionValue } from "framer-motion";
 
@@ -8,7 +8,7 @@ export default function DragBox2({ scrollRef }: { scrollRef: React.MutableRefObj
     const boxRotateX = useTransform(x, [-100, 100], [-540, 540]);
     const boxRotateY = useTransform(y, [-100, 100], [-540, 540]);
     const boxBgColor = useTransform(
-        x,
+        y,
         [-100, 0, 100],
         ["rgb(255, 231, 231)", "rgb(255, 118, 117)", "rgb(235, 75, 75)"]
     );
@@ -19,8 +19,7 @@ export default function DragBox2({ scrollRef }: { scrollRef: React.MutableRefObj
                 style={{
                     x,
                     y,
-                    rotateY: boxRotateX,
-                    rotateX: boxRotateY,
+                    rotateZ: boxRotateX,
                     backgroundColor: boxBgColor,
                 }}
                 drag

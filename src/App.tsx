@@ -157,17 +157,23 @@ const pathVar = {
     },
 };
 const slideVar = {
-    entry: (next: boolean) => ({
-        x: next ? 100 : -100,
-        scale: 0,
-    }),
-    exit: (next: boolean) => ({
-        x: next ? -100 : 100,
-        scale: 0,
-        transition: {
-            duration: 1,
-        },
-    }),
+    exit: (next: boolean) => {
+        console.log("exit", next);
+        return {
+            x: next ? -100 : 100,
+            scale: 0,
+            transition: {
+                duration: 1,
+            },
+        };
+    },
+    entry: (next: boolean) => {
+        console.log("entry", next);
+        return {
+            x: next ? 100 : -100,
+            scale: 0,
+        };
+    },
     center: {
         scale: 1,
         x: 0,
@@ -180,7 +186,7 @@ const slideVar = {
 function App() {
     const [refresh, setRefresh] = useState([0, 0, 0]);
     const [showing, setShowing] = useState(0);
-    const [next, setNext] = useState<boolean>();
+    const [next, setNext] = useState<boolean>(true);
     const constranisRef = useRef(null);
     const scrollRef = useRef(null);
     const x = useMotionValue(0);
@@ -319,7 +325,7 @@ function App() {
                         />
                     </Svg>
                 </ContentContainer>
-                {/* Slide */}
+                {/* Slide next버튼 클릭 후 prev버튼 누르면 exit가 정상적으로 작동하지 않음(수정요망)*/}
                 <ContentContainer bgColor="rgb(250, 177, 160)">
                     <ContentTitle>Slide</ContentTitle>
                     <AnimatePresence custom={next}>

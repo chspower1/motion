@@ -16,8 +16,10 @@ const Globalstyle = createGlobalStyle`
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 root.render(
-    <React.StrictMode>
+    // <React.StrictMode>
+    <>
         <Globalstyle />
         <App />
-    </React.StrictMode>
+    </>
+    // </React.StrictMode>
 );

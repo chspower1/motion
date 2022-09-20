@@ -34,6 +34,10 @@ const ModalContainer = styled(SampleContainer)`
 const ModalBox = styled(Box)`
     width: auto;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
 `;
 const Overlay = styled(motion.div)`
     z-index: 10000;
@@ -43,6 +47,13 @@ const Overlay = styled(motion.div)`
     display: flex;
     justify-content: center;
     align-items: center;
+`;
+const Line = styled(motion.div)<{ width: number; bgColor: string }>`
+    width: ${(props) => props.width}%;
+    background-color: ${(props) => props.bgColor};
+    margin: 20px;
+    height: 30px;
+    border-radius: 10px;
 `;
 function App() {
     const [refresh, setRefresh] = useState([0, 0, 0]);
@@ -94,7 +105,11 @@ function App() {
                         style={{ cursor: "pointer" }}
                         layoutId={item}
                         onClick={() => onClickModal(item)}
-                    ></ModalBox>
+                    >
+                        <Line layoutId={`${item}1`} width={50} bgColor="rgba(129, 236, 236,0.4)" />
+                        <Line layoutId={`${item}2`} width={60} bgColor="rgba(0, 184, 148,0.4)" />
+                        <Line layoutId={`${item}3`} width={40} bgColor="rgba(9, 132, 227,0.4)" />
+                    </ModalBox>
                 ))}
             </ModalContainer>
             <AnimatePresence>
@@ -105,10 +120,23 @@ function App() {
                         exit={{ backgroundColor: "rgba(0, 0, 0, 0)" }}
                         onClick={() => onClickModal(modalId)}
                     >
-                        <ModalBox
-                            layoutId={modalId}
-                            style={{ width: 1000, height: 500 }}
-                        ></ModalBox>
+                        <ModalBox layoutId={modalId} style={{ width: 1000, height: 500 }}>
+                            <Line
+                                layoutId={`${modalId}1`}
+                                width={50}
+                                bgColor="rgba(129, 236, 236,0.4)"
+                            />
+                            <Line
+                                layoutId={`${modalId}2`}
+                                width={60}
+                                bgColor="rgba(0, 184, 148,0.4)"
+                            />
+                            <Line
+                                layoutId={`${modalId}3`}
+                                width={40}
+                                bgColor="rgba(9, 132, 227,0.4)"
+                            />
+                        </ModalBox>
                     </Overlay>
                 ) : null}
             </AnimatePresence>

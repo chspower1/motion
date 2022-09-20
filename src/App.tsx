@@ -1,14 +1,5 @@
-import styled from "styled-components";
-import {
-    motion,
-    useMotionValue,
-    useTransform,
-    useScroll,
-    ResolvedValues,
-    AnimatePresence,
-} from "framer-motion";
+import { useTransform, useScroll } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
-import { render } from "react-dom";
 import AnimationBox from "./components/sample/AnimationBox";
 import VariantBox from "./components/sample/VariantBox";
 import GestureBox from "./components/sample/GestureBox";

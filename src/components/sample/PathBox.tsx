@@ -1,5 +1,5 @@
 import React from "react";
-import { ContentContainer, ContentTitle, RedirectBtn, Svg, Box } from "../styled/SampleStyled";
+import { ContentContainer, ContentTitle, RedirectBtn, Svg } from "../styled/SampleStyled";
 import { motion } from "framer-motion";
 import { AnimationBoxProps as PathBoxProps } from "./AnimationBox";
 
